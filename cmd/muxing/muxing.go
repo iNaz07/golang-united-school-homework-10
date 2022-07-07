@@ -75,6 +75,10 @@ func PostParam(w http.ResponseWriter, r *http.Request) {
 }
 
 func SetNewHeaders(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
 
 	aStr := r.Header.Get("a")
 	bStr := r.Header.Get("b")
@@ -91,7 +95,10 @@ func SetNewHeaders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	res := strconv.Itoa(a + b)
-	w.Header().Set("a+b", res)
+	arr := []string{res}
+	header := w.Header()
+	header["a+b"] = arr
+	//w.Header().Set("a+b", res)
 	w.WriteHeader(http.StatusOK)
 
 }
