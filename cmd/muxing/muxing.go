@@ -66,8 +66,8 @@ func PostParam(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		w.Write([]byte("I got message:\n"))
-		w.Write(body)
+		response := fmt.Sprintf("I got message:\n%s", body)
+		w.Write([]byte(response))
 		w.WriteHeader(http.StatusOK)
 		return
 	}
